@@ -8,7 +8,7 @@ let currentApp = app;
 
 server
   .listen(process.env.PORT || 3000, () => {
-    console.log('🚀 started');
+    console.log(`🚀 started http://localhost:${process.env.PORT}`);
   })
   .on('error', error => {
     console.log(error);

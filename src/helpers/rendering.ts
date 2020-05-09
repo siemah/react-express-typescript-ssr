@@ -1,4 +1,4 @@
-import { HelmetData } from "react-helmet";
+import { HelmetData } from 'react-helmet';
 
 /**
  * html skeleton rendering
@@ -7,7 +7,7 @@ import { HelmetData } from "react-helmet";
  * @param assets containig assets
  * @param globalState state to be passed down
  */
-export function jsxToHtml(markup: string, metaData: HelmetData, assets: any, globalState?: object): string {
+export function jsxToHtml(markup: string, metaData: HelmetData, assets: any, state?: object): string {
   return (`
     <!doctype html>
     <html ${metaData.htmlAttributes.toString()}>
@@ -19,15 +19,16 @@ export function jsxToHtml(markup: string, metaData: HelmetData, assets: any, glo
         ${metaData.meta.toString()}
         ${metaData.link.toString()}
         ${
-      assets.client.css
-        ? `<link rel="stylesheet" href="${assets.client.css}">`
-        : ''
-      }
+    assets.client.css
+      ? `<link rel="stylesheet" href="${assets.client.css}">`
+      : ''
+    }
+      <script>window.__INIT__STATE__=${JSON.stringify({ state })}</script>
         ${
-      process.env.NODE_ENV === 'production'
-        ? `<script src="${assets.client.js}" defer></script>`
-        : `<script src="${assets.client.js}" defer crossorigin></script>`
-      }
+    process.env.NODE_ENV === 'production'
+      ? `<script src="${assets.client.js}" defer></script>`
+      : `<script src="${assets.client.js}" defer crossorigin></script>`
+    }
       </head>
       <body ${metaData.bodyAttributes.toString()}>
         <div id="root">${markup}</div>

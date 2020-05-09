@@ -21,6 +21,12 @@ server
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR!))
   .get('/*', (req, res) => {
     const context: ReactRouterContextType = {};
+    context.state = {
+      user: {
+        role: 'user',
+        fullname: 'Siemah',
+      },
+    };
     const markup = renderToString(
       <StaticRouter context={context} location={req.url}>
         <App />
@@ -31,7 +37,7 @@ server
     if (context.url) {
       res.redirect(context.url);
     } else {
-      res.status(200).send(jsxToHtml(markup, helmetMeta, assets));
+      res.status(200).send(jsxToHtml(markup, helmetMeta, assets, context.state));
     }
   });
 
