@@ -2,6 +2,7 @@ import App from './App';
 import React from 'react';
 import { StaticRouter } from 'react-router-dom';
 import express from 'express';
+import helmet from 'helmet';
 import { renderToString } from 'react-dom/server';
 import { Helmet, } from 'react-helmet';
 import { jsxToHtml } from './helpers/rendering';
@@ -16,7 +17,7 @@ syncLoadAssets();
 
 const server = express();
 server
-  .disable('x-powered-by')
+  .use(helmet())
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR!))
   .get('/*', (req, res) => {
     const context: ReactRouterContextType = {};
