@@ -5,16 +5,20 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { StateContext } from './types/server';
 
+declare global {
+  interface Window { __INIT__STATE__: any; }
+}
+
 const Home = (props: any) => {
-  let _state: UserContext;
-  if (typeof window === 'undefined') {
-    _state = props.staticContext;
-  } else {
-    _state = window.__INIT__STATE__;
+  let _state: StateContext;
+  if (typeof window !== 'undefined') {
+    _state = window.__INIT__STATE__?.state;
+    console.log('client', _state);
     delete window.__INIT__STATE__;
+  } else {
+    _state = props.staticContext.state;
   }
   const [state, setState] = React.useState<StateContext>(_state);
-
   return (
     <div className="Home">
       <Helmet>

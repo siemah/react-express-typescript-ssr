@@ -6,7 +6,7 @@ import Auth from './pages/Auth';
 
 const App = () => (
   <Switch>
-    <Route path="/" component={Home} />
+    <Route exact={true} path="/" component={Home} />
     <Route path="/auth" component={Auth} />
   </Switch>
 );
