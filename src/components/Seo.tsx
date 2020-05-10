@@ -18,7 +18,7 @@ interface SeoMeta {
   content: string;
   property?: any | undefined;
 }
-interface SeoProps {
+export interface SeoProps {
   site: SeoSite;
   description?: string;
   lang?: string;
