@@ -1,9 +1,9 @@
 import React from 'react';
-import logo from './react.svg';
-import './Home.css';
+import logo from '../assets/images/react.svg';
+import '../assets/styles/Home.css';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { StateContext } from './types/server';
+import { StateContext } from '../types/server';
 
 declare global {
   interface Window { __INIT__STATE__: any; }
