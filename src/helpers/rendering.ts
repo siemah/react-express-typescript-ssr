@@ -1,4 +1,5 @@
 import { HelmetData } from 'react-helmet';
+import serialize from 'serialize-javascript';
 
 /**
  * html skeleton rendering
@@ -23,7 +24,7 @@ export function jsxToHtml(markup: string, metaData: HelmetData, assets: any, sta
       ? `<link rel="stylesheet" href="${assets.client.css}">`
       : ''
     }
-      <script>window.__INIT__STATE__=${JSON.stringify({ state })}</script>
+      <script>window.__INIT__STATE__=${serialize(state)}</script>
         ${
     process.env.NODE_ENV === 'production'
       ? `<script src="${assets.client.js}" defer></script>`
