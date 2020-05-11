@@ -2,9 +2,10 @@ import React from 'react';
 import logo from '../assets/images/react.svg';
 import '../assets/styles/Home.css';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { StateContext } from '../types/server';
+import PageLayout from '../components/PageLayout';
 
+// add some props to window object to avoid error on TS(2339)
 declare global {
   interface Window { __INIT__STATE__: any; }
 }
@@ -13,23 +14,25 @@ const Home = (props: any) => {
   let _state: StateContext;
   if (typeof window !== 'undefined') {
     _state = window.__INIT__STATE__?.state;
-    console.log('client', _state);
     delete window.__INIT__STATE__;
   } else {
     _state = props.staticContext.state;
   }
   const [state, setState] = React.useState<StateContext>(_state);
+  const siteData = { author: 'siemah', description: '', keywords: ['site'], siteUrl: 'http:localhost.com', title: 'Home Page', };
+  const _seo = {
+    title: 'Home',
+    site: siteData,
+    description: 'this is my description',
+    lang: 'en',
+    image: { height: 100, width: 100, src: 'logo.png' }
+  };
   return (
-    <div className="Home">
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>Home</title>
-        <link rel="canonical" href="http://mysite.com/example" />
-      </Helmet>
+    <PageLayout seoMetaData={_seo} className="main-container Home">
       <div className="Home-header">
         <img src={logo} className="Home-logo" alt="logo" />
-        <h2>Welcome to Razzle</h2>
-        <Link to="/auth">Auth</Link>
+        <h2>Welcome to Reactypress (React SSR) boilerplate</h2>
+        <Link to="/blog">Blog</Link>
       </div>
       <p className="Home-intro">
         To get started, edit <code>src/App.js</code> or{' '}
@@ -46,7 +49,7 @@ const Home = (props: any) => {
           <a href="https://palmer.chat">Community Slack</a>
         </li>
       </ul>
-    </div>
+    </PageLayout>
   );
 };
 

@@ -7,7 +7,7 @@ This is a boilerplate of react ssr app based on [Razzle](https://github.com/jare
 - [x] Move all component, images and styles to /components, /assets/images and /assets/styles
 - [x] Create a seo and layout component
 - [x] Support images like png, jpg and webp
-- [ ] Fetching data on server and client
+- [x] Fetching data on server and client
 - [ ] Chunked rendering
 - [ ] Private and guest routes
 - [ ] Refactor server

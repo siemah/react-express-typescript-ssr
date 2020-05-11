@@ -5,6 +5,7 @@ export interface UserContext {
 
 export interface StateContext {
   user?: UserContext;
+  data?: object[];
 }
 export interface ReactRouterContextType {
   url?: string;
