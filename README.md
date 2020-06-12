@@ -1,4 +1,4 @@
-# React Server Side Rendering With Expressjs And Typescript
+# React Server Side Rendering With Typescript And Expressjs
 
 This is a boilerplate of react ssr app based on [Razzle](https://github.com/jaredpalmer/razzle/).
 
@@ -8,9 +8,10 @@ This is a boilerplate of react ssr app based on [Razzle](https://github.com/jare
 - [x] Create a seo and layout component
 - [x] Support images like png, jpg and webp
 - [x] Fetching data on server and client
-- [ ] Chunked rendering
-- [ ] Private and guest routes
+- [x] Private and guest routes
+- [ ] Code spliting via react loadable
 - [ ] Refactor server
 - [ ] Setup express to include recommanded middlewares for best practice like csp, proxy support and compression
 - [ ] Config sequelize and/or mongoose
 - [ ] Implement json-ld on seo component
+- [ ] Chunked rendering
