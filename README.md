@@ -9,7 +9,7 @@ This is a boilerplate of react ssr app based on [Razzle](https://github.com/jare
 - [x] Support images like png, jpg and webp
 - [x] Fetching data on server and client
 - [x] Private and guest routes
-- [ ] Code spliting via react loadable
+- [x] Code spliting via react loadable
 - [ ] Refactor server
 - [ ] Setup express to include recommanded middlewares for best practice like csp, proxy support and compression
 - [ ] Config sequelize and/or mongoose

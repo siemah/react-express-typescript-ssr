@@ -44,7 +44,7 @@ server
   })
   .get('/*', (req, res) => {
 
-    const modules:string[] = [];
+    const modules: string[] = [];
     const context: ReactRouterContextType = {};
     context.state = {
       user: {
@@ -69,7 +69,7 @@ server
       const bundles = getBundles(stats, modules);
       assets.chunks = bundles.filter(bundle => bundle.file.endsWith('.js'));
       assets.styles = bundles.filter(bundle => bundle.file.endsWith('.css'));
-      
+
       res.status(200).send(jsxToHtml(markup, helmetMeta, assets, context.state));
     }
   });

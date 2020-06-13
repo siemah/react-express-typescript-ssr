@@ -42,7 +42,7 @@ export function jsxToHtml(markup: string, metaData: HelmetData, assets: any, sta
         }
         ${
           assets.chunks
-          .map((chunk:any) =>
+          .map((chunk: any) =>
               process.env.NODE_ENV === 'production'
                 ? `<script src="/${chunk.file}"></script>`
                 : `<script src="http://${process.env.HOST}:${parseInt(

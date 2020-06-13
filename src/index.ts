@@ -22,11 +22,11 @@ const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3002;
 export default Loadable.preloadAll().then(() =>
   express()
     .use((req, res) => app.handle(req, res))
-    .listen(port, function(err) {
+    .listen(port, (err: Error) => {
       if (err) {
         console.error(err);
         return;
       }
-    console.log(`> Started on port http://localhost:${port}`);
+      console.log(`> Started on port http://localhost:${port}`);
   })
 );
