@@ -16,25 +16,27 @@ export default function About(props: any) {
   }
   const [posts, setPosts] = React.useState<any[]>(_data || []);
 
-  React.useEffect(() => {
-    const _fetchInitPosts = async () => {
-      try {
-        const res = await fetch(`/posts`);
-        const data = await res.json();
-        if (_isMouted) {
-          setPosts(data);
+  React.useEffect(
+    () => {
+      const _fetchInitPosts = async () => {
+        try {
+          const res = await fetch(`/posts`);
+          const data = await res.json();
+          if (_isMouted) {
+            setPosts(data);
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
+      };
+      if (!_data) {
+        _fetchInitPosts();
       }
-    };
-    if (!_data) {
-      _fetchInitPosts();
-    }
-    return () => {
-      _isMouted = false;
-    };
-  }
+      return () => {
+        _isMouted = false;
+      };
+    },
+    []
   );
   const _renderPost = () => posts.map(({ id, title, content }) => (
     <div key={id}>

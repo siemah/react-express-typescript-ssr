@@ -4,13 +4,13 @@ import { Capture, } from 'react-loadable';
 import { getBundles, } from 'react-loadable/webpack';
 import { StaticRouter } from 'react-router-dom';
 import express from 'express';
-import helmet from 'helmet';
 import { renderToString } from 'react-dom/server';
 import { Helmet, } from 'react-helmet';
 import { jsxToHtml } from './helpers/rendering';
 import { ReactRouterContextType } from './types/server';
 // @ts-ignore
 import stats from '../build/react-loadable.json';
+import { setupMiddlewares } from './helpers/config';
 
 let assets: any;
 const data = [
@@ -36,8 +36,9 @@ const syncLoadAssets = () => {
 syncLoadAssets();
 
 const server = express();
+setupMiddlewares(server);
+
 server
-  .use(helmet())
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR!))
   .get('/posts', (req, res) => {
     res.status(200).json(data);
