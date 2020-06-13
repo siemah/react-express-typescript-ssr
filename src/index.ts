@@ -1,4 +1,5 @@
 import express from 'express';
+import Loadable from 'react-loadable';
 
 // this require is necessary for server HMR to recover from error
 // tslint:disable-next-line:no-var-requires
@@ -16,14 +17,16 @@ if (module.hot) {
   console.info('✅  Server-side HMR Enabled!');
 }
 
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3002;
 
-export default express()
-  .use((req, res) => app.handle(req, res))
-  .listen(port, (err: Error) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+export default Loadable.preloadAll().then(() =>
+  express()
+    .use((req, res) => app.handle(req, res))
+    .listen(port, function(err) {
+      if (err) {
+        console.error(err);
+        return;
+      }
     console.log(`> Started on port http://localhost:${port}`);
-  });
+  })
+);

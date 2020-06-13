@@ -20,19 +20,39 @@ export function jsxToHtml(markup: string, metaData: HelmetData, assets: any, sta
         ${metaData.meta.toString()}
         ${metaData.link.toString()}
         ${
-    assets.client.css
-      ? `<link rel="stylesheet" href="${assets.client.css}">`
-      : ''
-    }
-      <script>window.__INIT__STATE__=${serialize(state)}</script>
+          assets.client.css
+            ? `<link rel="stylesheet" href="${assets.client.css}">`
+            : ''
+        }
         ${
-    process.env.NODE_ENV === 'production'
-      ? `<script src="${assets.client.js}" defer></script>`
-      : `<script src="${assets.client.js}" defer crossorigin></script>`
-    }
-      </head>
-      <body ${metaData.bodyAttributes.toString()}>
+          assets.styles
+          .map((style: any) => {
+            return `<link href="${style.file}" rel="stylesheet"/>`;
+          })
+          .join('\n')
+        }
+        </head>
+        <body ${metaData.bodyAttributes.toString()}>
         <div id="root">${markup}</div>
+        <script>window.__INIT__STATE__=${serialize(state)}</script>
+        ${
+          process.env.NODE_ENV === 'production'
+            ? `<script src="${assets.client.js}"></script>`
+            : `<script src="${assets.client.js}" crossorigin></script>`
+        }
+        ${
+          assets.chunks
+          .map((chunk:any) =>
+              process.env.NODE_ENV === 'production'
+                ? `<script src="/${chunk.file}"></script>`
+                : `<script src="http://${process.env.HOST}:${parseInt(
+                    process.env.PORT as string,
+                    10
+                  ) + 1}/${chunk.file}"></script>`
+          )
+          .join('\n')
+        }
+        <script>window.main();</script>
       </body>
     </html>
   `);
