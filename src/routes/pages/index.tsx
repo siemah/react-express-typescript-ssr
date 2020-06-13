@@ -1,16 +1,18 @@
-import App from './App';
+import { Router, } from 'express';
+import App from '../../App';
 import React from 'react';
 import { Capture, } from 'react-loadable';
 import { getBundles, } from 'react-loadable/webpack';
 import { StaticRouter } from 'react-router-dom';
-import express from 'express';
+
 import { renderToString } from 'react-dom/server';
 import { Helmet, } from 'react-helmet';
-import { jsxToHtml } from './helpers/rendering';
-import { ReactRouterContextType } from './types/server';
+import { jsxToHtml } from '../../helpers/rendering';
+import { ReactRouterContextType } from '../../types/server';
 // @ts-ignore
-import stats from '../build/react-loadable.json';
-import { setupMiddlewares } from './helpers/config';
+import stats from '../../../build/react-loadable.json';
+
+const mainRoutePage = Router();
 
 let assets: any;
 const data = [
@@ -34,17 +36,11 @@ const syncLoadAssets = () => {
   assets = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 };
 syncLoadAssets();
-
-const server = express();
-setupMiddlewares(server);
-
-server
-  .use(express.static(process.env.RAZZLE_PUBLIC_DIR!))
+mainRoutePage
   .get('/posts', (req, res) => {
     res.status(200).json(data);
   })
   .get('/*', (req, res) => {
-
     const modules: string[] = [];
     const context: ReactRouterContextType = {};
     context.state = {
@@ -71,8 +67,8 @@ server
       assets.chunks = bundles.filter(bundle => bundle.file.endsWith('.js'));
       assets.styles = bundles.filter(bundle => bundle.file.endsWith('.css'));
 
-      res.status(200).send(jsxToHtml(markup, helmetMeta, assets, context.state));
+      res.status(200).send(jsxToHtml(markup, helmetMeta, assets, context.state, res.locals.nonce));
     }
   });
 
-export default server;
+export default mainRoutePage;
