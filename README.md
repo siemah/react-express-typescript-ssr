@@ -12,6 +12,6 @@ This is a boilerplate of react ssr app based on [Razzle](https://github.com/jare
 - [x] Code spliting via react loadable
 - [x] Refactor server
 - [x] Setup express to include recommanded middlewares for best practice like csp, proxy support and compression
-- [ ] Config sequelize and/or mongoose
+- [x] Config sequelize and/or mongoose
 - [ ] Implement json-ld on seo component
 - [ ] Chunked rendering
