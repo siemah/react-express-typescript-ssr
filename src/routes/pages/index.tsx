@@ -11,36 +11,35 @@ import { jsxToHtml } from '../../helpers/rendering';
 import { ReactRouterContextType } from '../../types/server';
 // @ts-ignore
 import stats from '../../../build/react-loadable.json';
+import Post from '../../models/post';
 
 const mainRoutePage = Router();
 
 let assets: any;
-const data = [
-  {
-    'id': '1',
-    'title': 'React SSR',
-    'content': 'This is the content of React SSR post'
-  },
-  {
-    'id': '2',
-    'title': 'Nodejs',
-    'content': 'This is the content of Nodejs post'
-  },
-  {
-    'id': '3',
-    'title': 'Typescript as supertype set',
-    'content': 'This is the content of Typescript as supertype set post'
-  }
-];
 const syncLoadAssets = () => {
   assets = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 };
 syncLoadAssets();
+
+function getPosts (): Promise<object[]> {
+  return new Promise(async (resolve) => {
+    try {
+      const posts = await Post.findAll({
+        attributes: ['title', 'id', 'content']
+      });
+      resolve(posts);
+    } catch (error) {
+      resolve([]);
+    }
+  });
+}
+
 mainRoutePage
-  .get('/posts', (req, res) => {
-    res.status(200).json(data);
+  .get('/posts', async (req, res) => {
+    const posts = await getPosts();
+    res.status(200).json(posts);
   })
-  .get('/*', (req, res) => {
+  .get('/*', async (req, res) => {
     const modules: string[] = [];
     const context: ReactRouterContextType = {};
     context.state = {
@@ -48,7 +47,7 @@ mainRoutePage
         role: 'user',
         fullname: 'Siemah',
       },
-      data
+      data: await getPosts()
     };
 
     const markup = renderToString(

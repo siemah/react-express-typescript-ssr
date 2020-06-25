@@ -1,5 +1,9 @@
 import express from 'express';
 import Loadable from 'react-loadable';
+import { config, } from 'dotenv';
+
+// load env vars using dotenv package
+config();
 
 // this require is necessary for server HMR to recover from error
 // tslint:disable-next-line:no-var-requires
