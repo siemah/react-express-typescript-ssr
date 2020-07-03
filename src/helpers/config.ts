@@ -9,7 +9,11 @@ import { Response } from 'express';
  */
 export function setupMiddlewares(server: any, express: any) {
   server.use(compression());
-  server.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
+  if (process.env.NODE_ENV !== 'production') {
+    server.use(express.static(process.env.RAZZLE_PUBLIC_DIR!));
+  } else {
+    server.use(express.static('build/public'));
+  }
   server.use(helmet());
   server.use((req: any, res: Response, next: any) => {
     res.locals.nonce = Date.now();
