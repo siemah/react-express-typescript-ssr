@@ -2,8 +2,8 @@ import express from 'express';
 import Loadable from 'react-loadable';
 
 if (process.env.NODE_ENV !== 'production') {
-  // tslint:disable-next-line:no-var-requires
-  const dotenv = require('dotenv');
+  // tslint:disable-next-line
+  const dotenv = require('dotenv'); // tslint:disable-line
   dotenv.config();
 }
 
